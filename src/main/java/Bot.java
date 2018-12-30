@@ -1,5 +1,6 @@
 import org.telegram.telegrambots.ApiContextInitializer;
 import org.telegram.telegrambots.TelegramBotsApi;
+import org.telegram.telegrambots.api.methods.send.SendMessage;
 import org.telegram.telegrambots.api.objects.Message;
 import org.telegram.telegrambots.api.objects.Update;
 import org.telegram.telegrambots.bots.TelegramLongPollingBot;
@@ -19,17 +20,33 @@ public class Bot extends TelegramLongPollingBot {
     }
 
     /**
+     * Метод ответа ботом на сообщения
+     * @param message
+     * @param text
+     */
+    public void sendMsg(Message message, String text){
+        SendMessage sendMessage = new SendMessage();                    //Инициализируем отправленное сообщение
+        sendMessage.enableMarkdown(true);                               //Включаем возможность разметки
+        sendMessage.setChatId(message.getChatId().toString());          //Установка id чата (чтобы было понятно, куда отправлять)
+        sendMessage.setReplyToMessageId(message.getMessageId());        //На какое конкретно сообщение мы должны отвечать
+        sendMessage.setText(text);                                      //Устанавливаем текст
+        //Отправка сообщения
+        try {
+            sendMessage(sendMessage);
+        } catch (TelegramApiException e) {
+            e.printStackTrace();
+        }
+    }
+
+    /**
      * Принимает сообщения/обновления (long pool)
      * @param update
      */
     public void onUpdateReceived(Update update) {
-        Message message = update.getMessage();                  //обновление бота
+        Message message = update.getMessage();                          //Обновление бота (получение им информации
         if (message != null && message.hasText()){
-            switch (message.getText()){
-                case "/help":
-                    sendMsg(message, "Чем могу помочь?");
-                    break;
-                case "":
+            if (message.getText().equals("/help")){
+                sendMsg(message, "Чем могу помочь?");
             }
         }
     }
