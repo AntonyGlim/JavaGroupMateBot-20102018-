@@ -3,6 +3,7 @@ import org.telegram.telegrambots.TelegramBotsApi;
 import org.telegram.telegrambots.api.objects.Update;
 import org.telegram.telegrambots.bots.TelegramLongPollingBot;
 import org.telegram.telegrambots.exceptions.TelegramApiException;
+import org.telegram.telegrambots.exceptions.TelegramApiRequestException;
 
 public class Bot extends TelegramLongPollingBot {
     public static void main(String[] args) {
@@ -11,20 +12,32 @@ public class Bot extends TelegramLongPollingBot {
         //Блок регистрации бота
         try {
             telegramBotsApi.registerBot(new Bot());
-        } catch (TelegramApiException e){
+        } catch (TelegramApiRequestException e){
             e.printStackTrace();
         }
     }
 
+    /**
+     * Принимает сообщения/обновления (long pool)
+     * @param update
+     */
     public void onUpdateReceived(Update update) {
 
     }
 
+    /**
+     * Поможет вернуть имя бота
+     * @return
+     */
     public String getBotUsername() {
-        return null;
+        return "JavaGroupMateBot(20102018)(1)";
     }
 
+    /**
+     * Поможет вернуть Token бота
+     * @return
+     */
     public String getBotToken() {
-        return null;
+        return "783854121:AAHgyl9Hj6yAwyGFfmCWyXQuaqPnHu5S2RQ";
     }
 }
