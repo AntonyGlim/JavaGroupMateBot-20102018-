@@ -1,5 +1,6 @@
 import org.telegram.telegrambots.ApiContextInitializer;
 import org.telegram.telegrambots.TelegramBotsApi;
+import org.telegram.telegrambots.api.objects.Message;
 import org.telegram.telegrambots.api.objects.Update;
 import org.telegram.telegrambots.bots.TelegramLongPollingBot;
 import org.telegram.telegrambots.exceptions.TelegramApiException;
@@ -22,7 +23,15 @@ public class Bot extends TelegramLongPollingBot {
      * @param update
      */
     public void onUpdateReceived(Update update) {
-
+        Message message = update.getMessage();                  //обновление бота
+        if (message != null && message.hasText()){
+            switch (message.getText()){
+                case "/help":
+                    sendMsg(message, "Чем могу помочь?");
+                    break;
+                case "":
+            }
+        }
     }
 
     /**
