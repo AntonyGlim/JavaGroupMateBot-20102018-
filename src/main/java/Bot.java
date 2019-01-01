@@ -48,6 +48,9 @@ public class Bot extends TelegramLongPollingBot {
             if (message.getText().equals("/help")){
                 sendMsg(message, "Чем могу помочь?");
             }
+            if (message.getText().equals("/about")){
+                sendMsg(message, "Меня разработал Antony.Glim");
+            }
         }
     }
 
